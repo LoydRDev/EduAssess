@@ -1,0 +1,135 @@
+.root {
+    -fx-background-color: white;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #1e293b;
+}
+
+.label:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: #3b82f6;
+}
+
+.title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+    -fx-padding: 0 0 30 0;
+}
+
+.title:hover {
+    -fx-cursor: default;
+    -fx-text-fill: #1f2937;
+}
+
+.form-container {
+    -fx-background-color: white;
+    -fx-padding: 0;
+    -fx-spacing: 15;
+    -fx-max-width: 350;
+}
+
+.input-container {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 4px;
+    -fx-padding: 8 12;
+}
+
+.input-container:focused-within {
+    -fx-border-color: #3b82f6;
+}
+
+.text-field, .password-field {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #9ca3af;
+    -fx-text-fill: #1f2937;
+    -fx-min-width: 350;
+    -fx-border-width: 0;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-prompt-text-fill: transparent;
+}
+
+.create-account-button {
+    -fx-background-color: #10b981;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+    -fx-min-width: 350;
+}
+
+.create-account-button:hover {
+    -fx-background-color: #059669;
+}
+
+.login-label {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 14px;
+}
+
+.back-to-login-label {
+    -fx-text-fill: #3b82f6;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+.back-to-login-label:hover {
+    -fx-text-fill: #2563eb;
+    -fx-underline: true;
+}
+
+/* Additional styles specific to CreateAccount */
+#backToLoginLabel {
+    -fx-text-fill: #3b82f6;
+    -fx-font-weight: bold;
+}
+
+#backToLoginLabel:hover {
+    -fx-text-fill: #2563eb;
+    -fx-underline: true;
+}
+
+#createAccountButton {
+    -fx-background-color: #10b981;
+}
+
+.registration-container {
+    -fx-padding: 0 0 5 2;
+    -fx-spacing: 5;
+}
+
+.info-icon {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 12px;
+}
+
+.registration-wrapper {
+    -fx-padding: 0;
+    -fx-margin: 0;
+    -fx-spacing: 0;
+}
+
+.registration-link {
+    -fx-text-fill: #3b82f6;
+    -fx-font-size: 12px;
+    -fx-underline: false;
+    -fx-padding: 0 0 0 2;
+    -fx-border-color: transparent;
+    -fx-translate-y: -12;
+}
+
+.registration-link:hover {
+    -fx-text-fill: #3b82f6;
+    -fx-underline: true;
+}

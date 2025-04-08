@@ -1,0 +1,240 @@
+.root {
+  -fx-background-color: #f3f4f6;
+  -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  -fx-background-color: #1f2937;
+  -fx-min-width: 250px;
+  -fx-padding: 20px 0;
+}
+
+.logo {
+  -fx-text-fill: white;
+  -fx-font-size: 24px;
+  -fx-font-weight: bold;
+  -fx-padding: 0 20px 20px 20px;
+}
+
+.nav-items {
+  -fx-spacing: 5px;
+}
+
+.nav-button {
+  -fx-background-color: transparent;
+  -fx-text-fill: #9ca3af;
+  -fx-font-size: 14px;
+  -fx-padding: 10px 20px;
+  -fx-alignment: center-left;
+  -fx-min-width: 250px;
+}
+
+.nav-button:hover {
+  -fx-background-color: #374151;
+  -fx-text-fill: white;
+}
+
+.nav-button.active {
+  -fx-background-color: #374151;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+}
+
+.logout-button {
+  -fx-text-fill: #ef4444;
+  -fx-alignment: CENTER;
+  -fx-max-width: infinity;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+}
+
+.sidebar-footer {
+  -fx-spacing: 5px;
+  -fx-padding: 20px 0 0 0;
+}
+
+/* Main Content Styles */
+.main-content {
+  -fx-background-color: #f3f4f6;
+}
+
+.main-content2{
+  -fx-background-color: #1f2937; 
+}
+
+/* Header Styles */
+.header {
+  -fx-background-color: white;
+  -fx-padding: 20px;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
+.user-info {
+  -fx-spacing: 20px;
+}
+
+.welcome-text {
+  -fx-text-fill: #6b7280;
+  -fx-font-size: 14px;
+}
+
+.user-name {
+  -fx-text-fill: #1f2937;
+  -fx-font-size: 18px;
+  -fx-font-weight: bold;
+}
+
+.student-info {
+  -fx-spacing: 5px;
+  -fx-padding: 0 0 0 40px;
+}
+
+.student-id {
+  -fx-text-fill: #6b7280;
+  -fx-font-size: 14px;
+}
+
+.year-semester {
+  -fx-text-fill: #1f2937;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+}
+
+/* Stats Cards */
+.stats-container {
+  -fx-padding: 10px 0;
+}
+
+.stat-card {
+  -fx-background-color: white;
+  -fx-padding: 20px;
+  -fx-min-width: 200px;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+  -fx-background-radius: 8px;
+}
+
+.stat-label {
+  -fx-text-fill: #6b7280;
+  -fx-font-size: 14px;
+}
+
+.stat-value {
+  -fx-text-fill: #1f2937;
+  -fx-font-size: 24px;
+  -fx-font-weight: bold;
+}
+
+/* Section Styles */
+.section {
+  -fx-background-color: white;
+  -fx-padding: 20px;
+  -fx-background-radius: 8px;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
+.section-header {
+  -fx-padding: 0 0 20px 0;
+  -fx-spacing: 10px;
+}
+
+.section-title {
+  -fx-text-fill: #1f2937;
+  -fx-font-size: 18px;
+  -fx-font-weight: bold;
+}
+
+.action-button {
+  -fx-background-color: #3b82f6;
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-padding: 8px 16px;
+  -fx-background-radius: 4px;
+}
+
+.action-button:hover {
+  -fx-background-color: #2563eb;
+}
+
+/* Table Styles */
+.courses-table,
+.assessment-table {
+  -fx-background-color: transparent;
+  -fx-table-cell-border-color: #e5e7eb;
+}
+
+.table-view {
+  -fx-background-color: transparent;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 1px;
+  -fx-border-radius: 4px;
+  -fx-fixed-cell-size: 45;
+}
+
+.table-view .column-header-background {
+  -fx-background-color: #f9fafb;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 0 0 1 0;
+}
+
+.table-view .column-header {
+  -fx-background-color: transparent;
+  -fx-padding: 10px;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 0 1 0 0;
+}
+
+.table-view .column-header .label {
+  -fx-text-fill: #4b5563;
+  -fx-font-weight: bold;
+  -fx-alignment: center-left;
+}
+
+.table-view .table-row-cell {
+  -fx-background-color: white;
+  -fx-border-color: transparent;
+}
+
+.table-view .table-row-cell:odd {
+  -fx-background-color: #f9fafb;
+}
+
+.table-view .table-row-cell:hover {
+  -fx-background-color: #f3f4f6;
+}
+
+.table-view .table-cell {
+  -fx-padding: 10px;
+  -fx-text-fill: #1f2937;
+  -fx-alignment: center-left;
+  -fx-border-color: transparent #e5e7eb transparent transparent;
+}
+
+/* ScrollPane Styles */
+.content-area {
+  -fx-background-color: transparent;
+  -fx-padding: 20px;
+}
+
+.content-area > .viewport {
+  -fx-background-color: transparent;
+}
+
+.scroll-pane {
+  -fx-background-color: transparent;
+  -fx-padding: 0;
+}
+
+.scroll-bar:vertical {
+  -fx-background-color: transparent;
+  -fx-pref-width: 12;
+}
+
+.scroll-bar:vertical .thumb {
+  -fx-background-color: #d1d5db;
+  -fx-background-radius: 6;
+}
+
+.scroll-bar:vertical .thumb:hover {
+  -fx-background-color: #9ca3af;
+}

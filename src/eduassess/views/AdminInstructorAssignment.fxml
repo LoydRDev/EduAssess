@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="eduassess.controller.AdminInstructorAssignmentController"
+      spacing="20" styleClass="admin-instructor-assignment">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Title -->
+    <Label text="Instructor Course Assignment">
+        <font>
+            <Font size="24"/>
+        </font>
+    </Label>
+    
+    <!-- Assignment Form -->
+    <VBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Select Instructor:"/>
+        <ComboBox fx:id="instructorComboBox" maxWidth="Infinity"/>
+        
+        <Label text="Select Course:"/>
+        <ComboBox fx:id="courseComboBox" maxWidth="Infinity"/>
+        
+        <Button text="Assign Course" onAction="#assignCourse"/>
+    </VBox>
+    
+    <!-- Assignments Table -->
+    <TableView fx:id="assignmentsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="instructorCol" text="Instructor"/>
+            <TableColumn fx:id="courseCol" text="Course"/>
+            <TableColumn fx:id="dateCol" text="Assigned Date"/>
+            <TableColumn fx:id="actionCol" text="Action"/>
+        </columns>
+    </TableView>
+</VBox>

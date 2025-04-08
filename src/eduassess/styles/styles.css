@@ -1,0 +1,161 @@
+/* Common styles for all views */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Header styles */
+.header {
+    -fx-background-color: #1e40af;
+    -fx-padding: 15px;
+    -fx-alignment: center-left;
+}
+
+.header Text {
+    -fx-fill: white;
+}
+
+/* Button styles */
+.button {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #2563eb;
+}
+
+.logout-button {
+    -fx-background-color: #ef4444;
+}
+
+.logout-button:hover {
+    -fx-background-color: #dc2626;
+}
+
+/* Table styles */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 4px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f3f4f6;
+    -fx-padding: 8px;
+    -fx-border-color: #e5e7eb;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #374151;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell {
+    -fx-padding: 8px;
+    -fx-border-color: #e5e7eb;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f9fafb;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #dbeafe;
+}
+
+/* Dialog styles */
+.dialog-pane {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f3f4f6;
+    -fx-padding: 15px;
+}
+
+.dialog-pane .content {
+    -fx-padding: 15px;
+}
+
+/* Form field styles */
+.text-field, .password-field {
+    -fx-padding: 8px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 4px;
+    -fx-background-color: white;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #3b82f6;
+}
+
+/* Label styles */
+.label {
+    -fx-text-fill: #374151;
+}
+
+/* ComboBox styles */
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 4px;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: #f3f4f6;
+}
+
+/* Table button styles */
+.table-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3b82f6;
+    -fx-padding: 4px 8px;
+    -fx-border-color: #3b82f6;
+    -fx-border-radius: 4px;
+}
+
+.table-button:hover {
+    -fx-background-color: #dbeafe;
+}
+
+/* Alert styles */
+.alert {
+    -fx-background-color: white;
+}
+
+.alert .header-panel {
+    -fx-background-color: #f3f4f6;
+}
+
+.alert .content {
+    -fx-padding: 15px;
+}
+
+/* Dashboard content styles */
+.content {
+    -fx-background-color: #f9fafb;
+    -fx-padding: 20px;
+}
+
+/* Statistics card styles */
+.stat-card {
+    -fx-background-color: white;
+    -fx-padding: 15px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 4px;
+}
+
+.stat-card .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6b7280;
+}
+
+.stat-card .value {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+} 

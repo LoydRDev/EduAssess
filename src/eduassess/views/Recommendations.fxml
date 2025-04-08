@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="eduassess.controller.RecommendationsController"
+      stylesheets="@../styles/AdminDashboard.css"
+      prefWidth="1200">
+    
+    <!-- Sidebar -->
+    <VBox styleClass="sidebar">
+        <Label text="EduAssess" styleClass="logo"/>
+        
+        <VBox styleClass="nav-items" VBox.vgrow="ALWAYS">
+            <Button text="Dashboard" styleClass="nav-button" onAction="#handleDashboard"/>
+            <Button text="Recommendations" styleClass="nav-button, active"/>
+            <VBox.margin>
+                <Insets top="20" />
+            </VBox.margin>
+        </VBox>
+        
+        <VBox styleClass="sidebar-footer" VBox.vgrow="NEVER">
+            <Button text="Logout" styleClass="nav-button, logout-button" onAction="#handleLogout"/>
+        </VBox>
+    </VBox>
+    
+    <!-- Main Content -->
+    <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
+        <!-- Header -->
+        <HBox styleClass="header">
+            <Label text="Course Recommendations" styleClass="section-title"/>
+        </HBox>
+        
+        <!-- Recommendations Content -->
+        <ScrollPane fitToWidth="true" styleClass="content-area">
+            <VBox spacing="20">
+                <!-- Recommended Courses -->
+                <VBox styleClass="section">
+                    <TableView fx:id="recommendedCoursesTable" styleClass="courses-table" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="courseCodeColumn" text="Course Code" prefWidth="120" styleClass="table-column"/>
+                            <TableColumn fx:id="courseTitleColumn" text="Title" prefWidth="250" styleClass="table-column"/>
+                            <TableColumn fx:id="prerequisitesColumn" text="Prerequisites" prefWidth="180" styleClass="table-column"/>
+                            <TableColumn fx:id="unitsColumn" text="Units" prefWidth="80" styleClass="table-column"/>
+                            <TableColumn fx:id="recommendationScoreColumn" text="Match Score" prefWidth="100" styleClass="table-column"/>
+                            <TableColumn fx:id="enrollColumn" text="Enroll" prefWidth="100" styleClass="table-column"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </VBox>
+</HBox>
