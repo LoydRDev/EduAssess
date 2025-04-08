@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eduassess.controller.NotEnrolledCoursesController">
+   <top>
+      <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Available Courses for Enrollment" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label text="Browse and enroll in courses that you haven't taken yet" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+         </padding>
+      </VBox>
+   </top>
+   <center>
+      <TableView fx:id="notEnrolledCoursesTable" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="courseCodeColumn" prefWidth="100.0" text="Course Code" />
+          <TableColumn fx:id="courseTitleColumn" prefWidth="250.0" text="Course Title" />
+          <TableColumn fx:id="prerequisitesColumn" prefWidth="150.0" text="Prerequisites" />
+          <TableColumn fx:id="unitsColumn" prefWidth="75.0" text="Units" />
+          <TableColumn fx:id="enrollColumn" prefWidth="100.0" text="Action" />
+        </columns>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </TableView>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleDashboard" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Back to Dashboard" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </bottom>
+</BorderPane>

@@ -1,0 +1,115 @@
+/* styles.css */
+.root {
+    -fx-background-color: white;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.welcome-label {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+    -fx-padding: 0 0 30 0;
+}
+
+.subtitle-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6b7280;
+    -fx-padding: 0 0 20 0;
+}
+
+.form-container {
+    -fx-background-color: white;
+    -fx-padding: 0;
+    -fx-spacing: 15;
+    -fx-max-width: 350;
+}
+
+.input-container {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 4px;
+    -fx-padding: 8 12;
+}
+
+.input-container:focused-within {
+    -fx-border-color: #3b82f6;
+}
+
+.icon-label {
+    -fx-text-fill: #6b7280;
+    -fx-min-width: 20px;
+    -fx-alignment: CENTER;
+}
+
+.text-field, .password-field {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #9ca3af;
+    -fx-text-fill: #1f2937;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-prompt-text-fill: transparent;
+}
+
+.login-button {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+    -fx-min-width: 350;
+}
+
+.login-button:hover {
+    -fx-background-color: #2563eb;
+}
+
+.create-account-label {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 14px;
+}
+
+.create-account-link {
+    -fx-text-fill: #3b82f6;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.create-account-link:hover {
+    -fx-text-fill: #2563eb;
+    -fx-underline: true;
+}
+
+.registration-container {
+    -fx-padding: 0 0 5 2;
+    -fx-spacing: 5;
+}
+
+.info-icon {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 12px;
+}
+
+.registration-link {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 12px;
+    -fx-underline: false;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+.registration-link:hover {
+    -fx-text-fill: #3b82f6;
+    -fx-underline: true;
+}
+
+.tooltip {
+    -fx-background-color: #1f2937;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-padding: 5px;
+}

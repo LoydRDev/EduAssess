@@ -1,0 +1,53 @@
+.container {
+    -fx-background-color: #f8fafc;
+}
+
+.header {
+    -fx-padding: 0 0 20 0;
+}
+
+.logo {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-text-fill: #475569;
+}
+
+.button-container {
+    -fx-alignment: center;
+}
+
+.account-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 16px;
+    -fx-padding: 15 20;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-min-width: 300;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.04), 10, 0, 0, 1);
+}
+
+.account-button:hover {
+    -fx-background-color: #f1f5f9;
+    -fx-border-color: #cbd5e1;
+}
+
+.back-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #64748b;
+    -fx-font-size: 14px;
+    -fx-padding: 10 15;
+    -fx-cursor: hand;
+    -fx-min-width: 300;
+}
+
+.back-button:hover {
+    -fx-text-fill: #475569;
+} 

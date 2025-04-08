@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="eduassess.controller.StudentAccountTypeController"
+      alignment="CENTER" spacing="20" styleClass="container"
+      stylesheets="@../styles/StudentAccountType.css">
+    
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <VBox alignment="CENTER" spacing="10" styleClass="header">
+        <Label text="EduAssess" styleClass="logo"/>
+        <Label text="Select Account Type" styleClass="title"/>
+    </VBox>
+
+    <VBox spacing="15" maxWidth="400" styleClass="button-container">
+        <Button text="New Student Account" styleClass="account-button" onAction="#handleNewAccount"/>
+        <Button text="Existing Student Account" styleClass="account-button" onAction="#handleOldAccount"/>
+        <Button text="Transferee Account" styleClass="account-button" onAction="#handleTransferee"/>
+        <Button text="Back" styleClass="back-button" onAction="#handleBack"/>
+    </VBox>
+</VBox> 

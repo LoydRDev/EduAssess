@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<HBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="eduassess.controller.DashboardController"
+      stylesheets="@../styles/Dashboard.css">
+    
+    <!-- Sidebar -->
+    <VBox styleClass="sidebar">
+        <Label text="EduAssess" styleClass="logo"/>
+        
+        <VBox styleClass="nav-items">
+            <Button text="Dashboard" styleClass="nav-button, active"/>
+            <Button text="Assessments" styleClass="nav-button"/>
+            <Button text="Results" styleClass="nav-button"/>
+            <Button text="Profile" styleClass="nav-button"/>
+        </VBox>
+        
+        <VBox styleClass="sidebar-footer">
+            <Button text="Settings" styleClass="nav-button"/>
+            <Button text="Logout" styleClass="nav-button, logout-button" onAction="#handleLogout"/>
+        </VBox>
+    </VBox>
+    
+    <!-- Main Content -->
+    <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
+        <!-- Header -->
+        <HBox styleClass="header">
+            <HBox styleClass="user-info">
+                <Label text="Welcome," styleClass="welcome-text"/>
+                <Label fx:id="userNameLabel" text="User Name" styleClass="user-name"/>
+            </HBox>
+            
+            <HBox styleClass="header-actions" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                <Button text="New Assessment" styleClass="action-button"/>
+            </HBox>
+        </HBox>
+        
+        <!-- Dashboard Content -->
+        <ScrollPane fitToWidth="true" styleClass="content-area">
+            <VBox spacing="20">
+                <!-- Quick Stats -->
+                <HBox spacing="20" styleClass="stats-container">
+                    <VBox styleClass="stat-card">
+                        <Label text="Total Assessments" styleClass="stat-label"/>
+                        <Label fx:id="totalAssessmentsLabel" text="0" styleClass="stat-value"/>
+                    </VBox>
+                    
+                    <VBox styleClass="stat-card">
+                        <Label text="Completed" styleClass="stat-label"/>
+                        <Label fx:id="completedAssessmentsLabel" text="0" styleClass="stat-value"/>
+                    </VBox>
+                    
+                    <VBox styleClass="stat-card">
+                        <Label text="Pending" styleClass="stat-label"/>
+                        <Label fx:id="pendingAssessmentsLabel" text="0" styleClass="stat-value"/>
+                    </VBox>
+                </HBox>
+                
+                <!-- Recent Assessments -->
+                <VBox styleClass="section">
+                    <Label text="Recent Assessments" styleClass="section-title"/>
+                    <TableView fx:id="recentAssessmentsTable" styleClass="assessment-table">
+                        <columns>
+                            <TableColumn text="Title" fx:id="titleColumn" resizable="false"/>
+                            <TableColumn text="Date" fx:id="dateColumn" resizable="false"/>
+                            <TableColumn text="Status" fx:id="statusColumn" resizable="false"/>
+                            <TableColumn text="Score" fx:id="scoreColumn" resizable="false"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </VBox>
+</HBox> 

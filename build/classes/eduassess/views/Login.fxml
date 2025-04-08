@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="eduassess.controller.LoginController"
+      stylesheets="@../styles/Login.css" prefWidth="400" prefHeight="500" fx:id="loginForm">
+    <padding>
+        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0"/>
+    </padding>
+
+    <VBox alignment="CENTER" spacing="5">
+        <Label text="EduAssess" styleClass="welcome-label"/>
+    </VBox>
+
+    <VBox spacing="15.0" styleClass="form-container">
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="input-container">
+            <Label text="👤" styleClass="icon-label"/>
+            <TextField fx:id="emailField" promptText="ID Number" focusTraversable="false"/>
+        </HBox>
+
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="input-container">
+            <Label text="🔒" styleClass="icon-label"/>
+            <PasswordField fx:id="passwordField" promptText="Password" focusTraversable="false"/>
+        </HBox>
+
+        <Button fx:id="loginButton" text="Sign In" onAction="#handleLogin" styleClass="login-button"/>
+    </VBox>
+
+    <HBox spacing="5.0" alignment="CENTER">
+        <Label text="Don't have an account?" styleClass="create-account-label"/>
+        <Label fx:id="createAccountLabel" text="Create Account" styleClass="create-account-link" onMouseClicked="#navigateToCreateAccount"/>
+    </HBox>
+</VBox>
