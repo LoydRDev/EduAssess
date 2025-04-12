@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="eduassess.controller.StudentDashboardController"
+      stylesheets="@../styles/AdminDashboard.css"
+      prefWidth="1200">
+    
+    <!-- Sidebar -->
+    <VBox styleClass="sidebar">
+        <Label text="EduAssess" styleClass="logo"/>
+        
+        <VBox styleClass="nav-items" VBox.vgrow="ALWAYS">
+            <Button text="Dashboard" styleClass="nav-button, active"/>
+            <Button text="History" styleClass="nav-button" onAction="#handleHistory"/>
+            <Button text="Recommendations" styleClass="nav-button" onAction="#handleRecommendations"/>
+            <Button text="Enroll in Courses" styleClass="nav-button" onAction="#handleEnrollment"/>
+            <VBox.margin>
+                <Insets top="20" />
+            </VBox.margin>
+        </VBox>
+        
+        <VBox styleClass="sidebar-footer" VBox.vgrow="NEVER">
+            <Button text="Logout" styleClass="nav-button, logout-button" onAction="#handleLogout"/>
+        </VBox>
+    </VBox>
+    
+    <!-- Main Content -->
+    <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
+        <!-- Header -->
+        <HBox styleClass="header" fx:id="header">
+            <HBox styleClass="user-info">
+                <VBox spacing="5.0">
+                    <Label fx:id="userNameLabel" styleClass="user-name"/>
+                    <Label fx:id="studentIdLabel" styleClass="welcome-text"/>
+                    <Label fx:id="yearSemesterLabel" styleClass="welcome-text"/>
+                </VBox>
+            </HBox>
+        </HBox>
+        
+        <!-- Dashboard Content -->
+        <ScrollPane fitToWidth="true" styleClass="content-area">
+            <VBox spacing="20">
+                <!-- Quick Stats -->
+                <HBox spacing="20" styleClass="stats-container">
+                    <VBox styleClass="stat-card">
+                        <Label text="Enrolled Courses" styleClass="stat-label"/>
+                        <Label fx:id="enrolledCoursesLabel" styleClass="stat-value"/>
+                    </VBox>
+                    
+                    <VBox styleClass="stat-card">
+                        <Label text="Total Units" styleClass="stat-label"/>
+                        <Label fx:id="totalUnitsLabel" styleClass="stat-value"/>
+                    </VBox>
+                </HBox>
+                
+                <!-- Courses Table -->
+                <VBox styleClass="section">
+                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="section-header">
+                        <Label text="Enrolled Courses" styleClass="section-title"/>
+                    </HBox>
+                    <TableView fx:id="enrolledCoursesTable" styleClass="courses-table" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="courseCodeColumn" text="Course Code" prefWidth="120" styleClass="table-column"/>
+                            <TableColumn fx:id="courseTitleColumn" text="Title" prefWidth="250" styleClass="table-column"/>
+                            <TableColumn fx:id="instructorColumn" text="Instructor" prefWidth="180" styleClass="table-column"/>
+                            <TableColumn fx:id="unitsColumn" text="Units" prefWidth="80" styleClass="table-column"/>
+                            <TableColumn fx:id="statusColumn" text="Status" prefWidth="100" styleClass="table-column"/>
+                            <TableColumn fx:id="gradeColumn" text="Grade" prefWidth="80" styleClass="table-column"/>
+                            <TableColumn fx:id="evaluateColumn" text="Get Evaluated" prefWidth="140" styleClass="table-column"/>
+                        </columns>
+                        <VBox.margin>
+                            <Insets top="10"/>
+                        </VBox.margin>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </VBox>
+</HBox>

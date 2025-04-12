@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="eduassess.controller.InstructorDashboardController"
+      stylesheets="@../styles/Dashboard.css"
+      prefWidth="1200">
+    
+    <!-- Sidebar -->
+    <VBox styleClass="sidebar">
+        <Label text="EduAssess" styleClass="logo"/>
+        
+        <VBox styleClass="nav-items" VBox.vgrow="ALWAYS">
+            <Button text="Dashboard" styleClass="nav-button, active"/>
+            <Button text="My Classes" styleClass="nav-button" onAction="#handleViewClasses"/>
+            <Button text="Grade Entry" styleClass="nav-button" onAction="#handleGradeEntry"/>
+            <Button text="Student Records" styleClass="nav-button" onAction="#handleStudentRecords"/>
+            <Button text="Profile" styleClass="nav-button" onAction="#handleProfile"/>
+            <VBox.margin>
+                <Insets top="20" />
+            </VBox.margin>
+        </VBox>
+        
+        <VBox styleClass="sidebar-footer" VBox.vgrow="NEVER">
+            <Button text="Logout" styleClass="nav-button, logout-button" onAction="#handleLogout"/>
+        </VBox>
+    </VBox>
+    
+    <!-- Main Content -->
+    <VBox styleClass="main-content" HBox.hgrow="ALWAYS">
+        <!-- Header -->
+        <HBox styleClass="header">
+            <HBox styleClass="user-info" HBox.hgrow="ALWAYS">
+                <VBox>
+                    <Label styleClass="welcome-text" text="Welcome," />
+                    <Label fx:id="userNameLabel" styleClass="user-name" text="Instructor Name" />
+                </VBox>
+                <VBox styleClass="instructor-info">
+                    <Label fx:id="instructorIdLabel" styleClass="instructor-id" text="ID: " />
+                    <Label fx:id="departmentLabel" styleClass="department" text="Department" />
+                </VBox>
+            </HBox>
+        </HBox>
+        
+        <!-- Dashboard Content -->
+        <ScrollPane fitToWidth="true" styleClass="content-area">
+            <VBox spacing="20">
+                <!-- Quick Stats -->
+                <HBox spacing="20" styleClass="stats-container">
+                    <VBox styleClass="stat-card">
+                        <Label text="Total Classes" styleClass="stat-label"/>
+                        <Label fx:id="totalClassesLabel" text="0" styleClass="stat-value"/>
+                    </VBox>
+                    
+                    <VBox styleClass="stat-card">
+                        <Label text="Total Students" styleClass="stat-label"/>
+                        <Label fx:id="totalStudentsLabel" text="0" styleClass="stat-value"/>
+                    </VBox>
+                    
+                    <VBox styleClass="stat-card">
+                        <Label text="Pending Grades" styleClass="stat-label"/>
+                        <Label fx:id="pendingGradesLabel" text="0" styleClass="stat-value"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Pending Evaluations Section -->
+                <VBox spacing="10" styleClass="evaluations-section">
+                    <Label text="Pending Evaluations" styleClass="section-title"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <ComboBox fx:id="studentComboBox" prefWidth="300" promptText="Select Student">
+                            <HBox.margin>
+                                <Insets right="10"/>
+                            </HBox.margin>
+                        </ComboBox>
+                    </HBox>
+                    
+                    <TableView fx:id="evaluationsTable" styleClass="courses-table" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="studentIdColumn" text="Student ID" prefWidth="150" styleClass="table-column"/>
+                            <TableColumn fx:id="studentNameColumn" text="Student Name" prefWidth="250" styleClass="table-column"/>
+                            <TableColumn fx:id="courseCodeColumn" text="Course Code" prefWidth="150" styleClass="table-column"/>
+                            <TableColumn fx:id="requestDateColumn" text="Request Date" prefWidth="150" styleClass="table-column"/>
+                            <TableColumn fx:id="gradeColumn" text="Grade" prefWidth="100" styleClass="table-column"/>
+                            <TableColumn fx:id="actionColumn" text="Action" prefWidth="130" styleClass="table-column"/>
+                        </columns>
+                        <VBox.margin>
+                            <Insets top="10" bottom="20"/>
+                        </VBox.margin>
+                        <padding>
+                            <Insets top="5" right="5" bottom="5" left="5"/>
+                        </padding>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </VBox>
+</HBox>
