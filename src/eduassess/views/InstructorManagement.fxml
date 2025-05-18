@@ -50,7 +50,12 @@
                   <HBox prefHeight="48.0" prefWidth="890.0">
                      <children>
                           <Label styleClass="title" text="Instructor Course Assignment" />
-                                   <Region HBox.hgrow="ALWAYS" />
+                                   <Region prefHeight="55.0" prefWidth="322.0" HBox.hgrow="ALWAYS" />
+                          <Button fx:id="refreshButton" onAction="#refreshData" prefHeight="35.0" prefWidth="173.0" styleClass="refresh-button" text="Refresh">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Button>
                                    <Label fx:id="userNameLabel" styleClass="user-name" />
                      </children></HBox>
                   <ScrollPane>
@@ -59,8 +64,7 @@
                            <children>
                                                     <!-- Header Section -->
                                <HBox alignment="CENTER_LEFT" spacing="20">
-                                   <Region prefHeight="52.0" prefWidth="803.0" HBox.hgrow="ALWAYS" />
-                                   <Button fx:id="refreshButton" onAction="#refreshData" styleClass="refresh-button" text="Refresh" />
+                                   <Region prefHeight="14.0" prefWidth="803.0" HBox.hgrow="ALWAYS" />
                                </HBox>
                                
                                               <!-- Assignment Form -->
@@ -69,15 +73,16 @@
                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100" prefWidth="200" />
                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="200" prefWidth="300" />
                                    </columnConstraints>
-                                   
-                                                  <Label text="Select Instructor:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                   <Label text="Select Instructor:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                                    <ComboBox fx:id="instructorComboBox" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                   
-                                                  <Label text="Select Course:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                   <ComboBox fx:id="courseComboBox" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                   
-                                                  <Button fx:id="assignButton" onAction="#handleAssignCourse" text="Assign Course" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                    <Label text="Select Year Level:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                   <ComboBox fx:id="yearLevelComboBox" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 <Label text="Select Semester Level:" GridPane.rowIndex="2" />
+                                 <ComboBox fx:id="semesterComboBox" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                <Button fx:id="assignButton" onAction="#handleAssignCourse" text="Assign Course" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                                  <rowConstraints>
+                                    <RowConstraints />
                                     <RowConstraints />
                                     <RowConstraints />
                                     <RowConstraints />
@@ -97,15 +102,19 @@
                                     </opaqueInsets></TextField>
                                </HBox>
                                
-                                              <!-- Assigned Courses Table -->
-                               <TableView fx:id="instructorsTable" prefHeight="315.0" prefWidth="882.0" VBox.vgrow="ALWAYS">
+                                              <!-- Courses Table with Selection -->
+                               <TableView fx:id="instructorsTable" prefHeight="361.0" prefWidth="882.0" VBox.vgrow="ALWAYS">
                                    <columns>
-                                       <TableColumn fx:id="courseCodeColumn" prefWidth="150.0" resizable="false" text="Course Code" />
-                                       <TableColumn fx:id="courseNameColumn" prefWidth="400.0" resizable="false" text="Course Name" />
-                                       <TableColumn fx:id="courseInstructorColumn" prefWidth="170.0" resizable="false" text="Instructor" />
+                                       <TableColumn fx:id="selectColumn" prefWidth="92.0" resizable="false" text="Select">
+                                       </TableColumn>
+                                       <TableColumn fx:id="courseCodeColumn" prefWidth="142.0" resizable="false" text="Course Code" />
+                                       <TableColumn fx:id="courseNameColumn" prefWidth="341.0" resizable="false" text="Course Name" />
+                                       <TableColumn fx:id="courseInstructorColumn" prefWidth="142.0" resizable="false" text="Instructor" />
+                                       <TableColumn fx:id="manageColumn" prefWidth="159.0" resizable="false" text="Manage">
+                                       </TableColumn>
                                    </columns>
                                    <placeholder>
-                                       <Label text="No assigned courses found" />
+                                       <Label text="No courses found" />
                                    </placeholder>
                                  <VBox.margin>
                                     <Insets bottom="5.0" />

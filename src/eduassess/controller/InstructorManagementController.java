@@ -31,25 +31,34 @@ import java.util.stream.Collectors;
 import javafx.scene.layout.VBox;
 
 public class InstructorManagementController implements Initializable {
+    private ObservableList<Course> selectedCourses = FXCollections.observableArrayList();
+    private Course selectedCourse;
     @FXML
     private ComboBox<Instructor> instructorComboBox;
     @FXML
-    private ComboBox<Course> courseComboBox;
+    private ComboBox<String> yearLevelComboBox;
+    @FXML
+    private ComboBox<String> semesterComboBox;
     @FXML
     private Label userNameLabel;
     @FXML
-    private TableView<Instructor> instructorsTable;
+    private TableView<Course> instructorsTable;
     @FXML
-    private TableColumn<Instructor, String> courseCodeColumn;
+    private TableColumn<Course, Boolean> selectColumn;
     @FXML
-    private TableColumn<Instructor, String> courseNameColumn;
+    private TableColumn<Course, String> courseCodeColumn;
     @FXML
-    private TableColumn<Instructor, String> courseInstructorColumn;
+    private TableColumn<Course, String> courseNameColumn;
     @FXML
-    private TableColumn<Instructor, Void> unassignColumn;
+    private TableColumn<Course, String> courseInstructorColumn;
+    @FXML
+    private TableColumn<Course, Void> manageColumn;
 
     @FXML
     private Label statusLabel;
+
+    String selectedYearLevel = null;
+    String selectedSemester = null;
 
     private UserDAO userDAO;
     private CourseDAO courseDAO;
@@ -61,10 +70,56 @@ public class InstructorManagementController implements Initializable {
         courseDAO = new CourseDAO();
         instructorDAO = new InstructorDAO();
 
+        // Initialize year level and semester combo boxes
+        try {
+            List<Course> allCourses = courseDAO.getAllCourses();
+
+            // Get distinct year levels
+            List<String> yearLevels = allCourses.stream()
+                    .map(Course::getYearLevel)
+                    .distinct()
+                    .collect(Collectors.toList());
+
+            // Get distinct semesters
+            List<String> semesters = allCourses.stream()
+                    .map(Course::getSemester)
+                    .distinct()
+                    .collect(Collectors.toList());
+
+            // Populate combo boxes
+            yearLevelComboBox.setItems(FXCollections.observableArrayList(yearLevels));
+            semesterComboBox.setItems(FXCollections.observableArrayList(semesters));
+
+        } catch (Exception e) {
+            Logger.getLogger(InstructorManagementController.class.getName()).log(Level.SEVERE, null, e);
+        }
+
         // Initialize table columns
-        courseCodeColumn.setCellValueFactory(new PropertyValueFactory<>("course_Code"));
-        courseNameColumn.setCellValueFactory(new PropertyValueFactory<>("course_Name"));
-        courseInstructorColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        selectColumn.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
+        selectColumn.setCellFactory(col -> new TableCell<Course, Boolean>() {
+            private final CheckBox checkBox = new CheckBox();
+            {
+                checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+                    if (isSelected != null) {
+                        getTableView().getItems().get(getIndex()).setSelected(isSelected);
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    checkBox.setSelected(item != null && item);
+                    setGraphic(checkBox);
+                }
+            }
+        });
+        courseCodeColumn.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
+        courseNameColumn.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+        courseInstructorColumn.setCellValueFactory(new PropertyValueFactory<>("instructorName"));
 
         // Initialize instructor combo box
         try {
@@ -76,11 +131,8 @@ public class InstructorManagementController implements Initializable {
             Logger.getLogger(InstructorManagementController.class.getName()).log(Level.SEVERE, null, e);
         }
 
-        // Add Unassign button column
-        unassignColumn = new TableColumn<>("Manage");
-        unassignColumn.setResizable(false);
-        unassignColumn.setPrefWidth(156);
-        unassignColumn.setCellFactory(col -> new TableCell<Instructor, Void>() {
+        // Add Manage button column
+        manageColumn.setCellFactory(col -> new TableCell<Course, Void>() {
             private final Button unassignButton = new Button("Dismiss");
             {
                 unassignButton.setStyle(
@@ -90,11 +142,19 @@ public class InstructorManagementController implements Initializable {
                                 "-fx-padding: 5 15;" +
                                 "-fx-cursor: hand;");
                 unassignButton.setOnAction(event -> {
-                    Instructor instructor = getTableView().getItems().get(getIndex());
-                    try {
-                        handleUnassignCourse(instructor);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(InstructorManagementController.class.getName()).log(Level.SEVERE, null, ex);
+                    Course course = getTableView().getItems().get(getIndex());
+                    if (course != null && course.getInstructorName() != null
+                            && !course.getInstructorName().trim().isEmpty()) {
+                        // Unassign logic: set instructor to null and update in DB
+                        try {
+                            instructorDAO.unassignInstructorFromCourse(course.getInstructorId(),
+                                    course.getCourseCode());
+                            course.setInstructorName("");
+                            getTableView().refresh();
+                            statusLabel.setText("Instructor unassigned from course " + course.getCourseCode());
+                        } catch (Exception e) {
+                            statusLabel.setText("Failed to unassign instructor: " + e.getMessage());
+                        }
                     }
                 });
             }
@@ -105,13 +165,18 @@ public class InstructorManagementController implements Initializable {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(unassignButton);
+                    Course course = getTableView().getItems().get(getIndex());
+                    if (course != null && course.getInstructorName() != null
+                            && !course.getInstructorName().trim().isEmpty()
+                            && !course.getInstructorName().equals("Not Assigned")) {
+                        VBox buttonBox = new VBox(5, unassignButton);
+                        setGraphic(buttonBox);
+                    } else {
+                        setGraphic(null);
+                    }
                 }
             }
         });
-
-        // Add the unassign column to the table view
-        instructorsTable.getColumns().add(unassignColumn);
 
         // Load instructors and courses
         loadInstructors();
@@ -120,6 +185,14 @@ public class InstructorManagementController implements Initializable {
         // Add listener to instructor selection
         instructorComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             loadAssignedCourses(newVal);
+        });
+
+        // Add listeners to yearLevelComboBox and semesterComboBox to update TableView
+        yearLevelComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            loadCourses();
+        });
+        semesterComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            loadCourses();
         });
 
         // Load all assigned courses initially
@@ -135,23 +208,62 @@ public class InstructorManagementController implements Initializable {
         try {
             List<Course> allCourses = courseDAO.getAllCourses();
             Instructor selectedInstructor = instructorComboBox.getValue();
+            if (yearLevelComboBox != null && yearLevelComboBox.getValue() != null) {
+                selectedYearLevel = yearLevelComboBox.getValue();
+            }
+            if (semesterComboBox != null && semesterComboBox.getValue() != null) {
+                selectedSemester = semesterComboBox.getValue();
+            }
+
+            // First get all assigned courses with instructor info
+            List<Instructor> allAssignedCourses = instructorDAO.getAllAssignedCourses();
+
+            List<Course> filteredCourses = allCourses.stream().map(course -> {
+                Course courseWithInstructor = new Course();
+                courseWithInstructor.setCourseCode(course.getCourseCode());
+                courseWithInstructor.setCourseName(course.getCourseName());
+                courseWithInstructor.setYearLevel(course.getYearLevel());
+                courseWithInstructor.setSemester(course.getSemester());
+
+                // Find instructor for this course
+                Optional<Instructor> instructorForCourse = allAssignedCourses.stream()
+                        .filter(i -> i.getCourse_Code().equals(course.getCourseCode()))
+                        .findFirst();
+
+                if (instructorForCourse.isPresent()) {
+                    courseWithInstructor.setInstructorName(instructorForCourse.get().getFullName());
+                    courseWithInstructor.setInstructorId(instructorForCourse.get().getIdNumber());
+                } else {
+                    courseWithInstructor.setInstructorName("Not Assigned");
+                    courseWithInstructor.setInstructorId(0);
+                }
+                return courseWithInstructor;
+            }).collect(Collectors.toList());
+
+            // Apply filters
+            if (selectedYearLevel != null) {
+                filteredCourses = filteredCourses.stream()
+                        .filter(course -> selectedYearLevel.equals(course.getYearLevel()))
+                        .collect(Collectors.toList());
+            }
+            if (selectedSemester != null) {
+                filteredCourses = filteredCourses.stream()
+                        .filter(course -> selectedSemester.equals(course.getSemester()))
+                        .collect(Collectors.toList());
+            }
+
+            // Set the filtered courses to the table view
+            instructorsTable.setItems(FXCollections.observableArrayList(filteredCourses));
 
             if (selectedInstructor != null) {
-                // Get assigned courses for this instructor
                 List<Instructor> assignedCourses = instructorDAO
                         .getCoursesForInstructor(selectedInstructor.getIdNumber());
                 List<String> assignedCourseCodes = assignedCourses.stream()
                         .map(Instructor::getCourse_Code)
                         .collect(Collectors.toList());
-
-                // Filter out already assigned courses
-                List<Course> availableCourses = allCourses.stream()
+                filteredCourses = filteredCourses.stream()
                         .filter(course -> !assignedCourseCodes.contains(course.getCourseCode()))
                         .collect(Collectors.toList());
-
-                courseComboBox.setItems(FXCollections.observableArrayList(availableCourses));
-            } else {
-                courseComboBox.setItems(FXCollections.observableArrayList(allCourses));
             }
         } catch (SQLException e) {
             showAlert("Error", "Failed to load courses: " + e.getMessage());
@@ -160,26 +272,53 @@ public class InstructorManagementController implements Initializable {
 
     private void loadAssignedCourses(Instructor instructor) {
         try {
+            List<Course> allCourses = courseDAO.getAllCourses();
             List<Instructor> assignedCourses;
+
             if (instructor != null) {
                 assignedCourses = instructorDAO.getCoursesForInstructor(instructor.getIdNumber());
             } else {
                 assignedCourses = instructorDAO.getAllAssignedCourses();
             }
-            instructorsTable.setItems(FXCollections.observableArrayList(assignedCourses));
+
+            // Map instructor assignments to courses
+            ObservableList<Course> coursesWithInstructors = FXCollections.observableArrayList();
+            for (Course course : allCourses) {
+                Course courseWithInstructor = new Course();
+                courseWithInstructor.setCourseCode(course.getCourseCode());
+                courseWithInstructor.setCourseName(course.getCourseName());
+                courseWithInstructor.setYearLevel(course.getYearLevel());
+                courseWithInstructor.setSemester(course.getSemester());
+
+                // Find instructor for this course
+                Optional<Instructor> instructorForCourse = assignedCourses.stream()
+                        .filter(i -> i.getCourse_Code().equals(course.getCourseCode()))
+                        .findFirst();
+
+                if (instructorForCourse.isPresent()) {
+                    courseWithInstructor.setInstructorName(instructorForCourse.get().getFullName());
+                    courseWithInstructor.setInstructorId(instructorForCourse.get().getIdNumber());
+                } else {
+                    courseWithInstructor.setInstructorName("Not Assigned");
+                    courseWithInstructor.setInstructorId(0);
+                }
+
+                coursesWithInstructors.add(courseWithInstructor);
+            }
+
+            instructorsTable.setItems(coursesWithInstructors);
         } catch (SQLException e) {
-            showAlert("Error loading assigned courses", e.getMessage());
+            showAlert("Error loading courses", e.getMessage());
         }
     }
 
     @FXML
     private void refreshData() throws SQLException {
-        List<Instructor> assignedCourses;
-        assignedCourses = instructorDAO.getAllAssignedCourses();
+        List<Course> allCourses = courseDAO.getAllCourses();
         loadInstructors();
         loadCourses();
-        if (assignedCourses != null) {
-            instructorsTable.setItems(FXCollections.observableArrayList(assignedCourses));
+        if (allCourses != null) {
+            instructorsTable.setItems(FXCollections.observableArrayList(allCourses));
         }
     }
 
@@ -198,8 +337,7 @@ public class InstructorManagementController implements Initializable {
 
         Optional<ButtonType> result = confirmation.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            boolean success = instructorDAO.unassignInstructorFromCourse(
-                    instructor.getIdNumber(),
+            boolean success = instructorDAO.unassignInstructorFromCourse(instructor.getIdNumber(),
                     instructor.getCourse_Code());
             if (success) {
                 showAlert("Success", "Course successfully dismiss from instructor.");
@@ -214,50 +352,58 @@ public class InstructorManagementController implements Initializable {
     @FXML
     private void handleAssignCourse() {
         Instructor selectedInstructor = instructorComboBox.getValue();
-        Course selectedCourse = courseComboBox.getValue();
+        selectedYearLevel = yearLevelComboBox.getValue();
+        selectedSemester = semesterComboBox.getValue();
 
-        if (selectedInstructor == null || selectedCourse == null) {
-            showAlert("Selection Required", "Please select both an instructor and a course.");
+        if (selectedInstructor == null) {
+            showAlert("Selection Required", "Please select an instructor.");
+            return;
+        }
+
+        // Get selected courses from checkboxes
+        List<Course> selectedCourses = instructorsTable.getItems().stream()
+                .filter(Course::isSelected)
+                .collect(Collectors.toList());
+
+        if (selectedCourses.isEmpty()) {
+            showAlert("Selection Required", "Please select at least one course to assign.");
             return;
         }
 
         try {
-            System.out.println("Attempting to assign course " + selectedCourse.getCourseCode() +
-                    " to instructor " + selectedInstructor.getIdNumber());
+            int successCount = 0;
+            for (Course course : selectedCourses) {
+                System.out.println("Attempting to assign course " + course.getCourseCode() +
+                        " to instructor " + selectedInstructor.getIdNumber() +
+                        " for " + selectedYearLevel + " " + selectedSemester);
 
-            // Check if course is already assigned to instructor
-            if (instructorDAO.isCourseAssignedToInstructor(selectedInstructor.getIdNumber(),
-                    selectedCourse.getCourseCode())) {
-                System.out.println("Course already assigned to instructor");
-                statusLabel.setText("This course is already assigned to the instructor.");
-                showAlert("Duplicate Assignment", "This course is already assigned to the instructor.");
-                return;
+                // Check if course is already assigned to instructor for this year/semester
+                if (instructorDAO.isCourseAssignedToInstructor(selectedInstructor.getIdNumber(),
+                        course.getCourseCode())) {
+                    System.out.println("Course already assigned to instructor");
+                    continue;
+                }
+
+                boolean success = instructorDAO.assignInstructorToCourse(
+                        selectedInstructor.getIdNumber(),
+                        course.getCourseCode());
+
+                if (success) {
+                    successCount++;
+                    System.out.println("Course assignment successful");
+                } else {
+                    System.out.println("Course assignment failed without exception");
+                }
             }
 
-            boolean success = instructorDAO.assignInstructorToCourse(
-                    selectedInstructor.getIdNumber(),
-                    selectedCourse.getCourseCode());
-
-            if (success) {
-                System.out.println("Course assignment successful");
+            if (successCount > 0) {
                 loadAssignedCourses(selectedInstructor);
                 loadCourses();
-                statusLabel.setText("Course successfully assigned to instructor.");
-                showAlert("Success", "Course successfully assigned to instructor.");
+                statusLabel.setText(successCount + " course(s) successfully assigned to instructor.");
+                showAlert("Success", successCount + " course(s) successfully assigned to instructor.");
             } else {
-                System.out.println("Course assignment failed without exception");
-                statusLabel.setText("Failed to assign course. Please check logs for details.");
-                showAlert("Error", "Failed to assign course. Please check logs for details.");
-            }
-        } catch (SQLException e) {
-            System.err.println("SQL Error during course assignment: " + e.getMessage());
-            e.printStackTrace();
-            if (e.getErrorCode() == 1062) { // MySQL duplicate entry error code
-                statusLabel.setText("This course is already assigned to the instructor.");
-                showAlert("Duplicate Assignment", "This course is already assigned to the instructor.");
-            } else {
-                statusLabel.setText("Database Error: Failed to assign course.");
-                showAlert("Database Error", "Failed to assign course. Please try again or contact support.");
+                statusLabel.setText("No courses were assigned. Some may already be assigned.");
+                showAlert("Info", "No courses were assigned. Some may already be assigned.");
             }
         } catch (Exception e) {
             System.err.println("Unexpected error during course assignment: " + e.getMessage());
@@ -265,6 +411,8 @@ public class InstructorManagementController implements Initializable {
             showAlert("Error", "An unexpected error occurred. Please try again.");
             statusLabel.setText("Unexpected error during course assignment.");
         }
+        // MySQL duplicate entry error code
+
     }
 
     @FXML

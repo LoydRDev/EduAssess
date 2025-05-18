@@ -103,6 +103,14 @@ public class InstructorDAO {
             int rowsAffected = pstmt.executeUpdate();
             System.out.println("Rows affected by insert: " + rowsAffected);
 
+            // Update courses table with instructor ID
+            String updateCourseSql = "UPDATE courses SET instructor_IDNumber = ? WHERE course_Code = ?";
+            PreparedStatement updateStmt = conn.prepareStatement(updateCourseSql);
+            updateStmt.setInt(1, instructorId);
+            updateStmt.setString(2, courseCode);
+            int coursesUpdated = updateStmt.executeUpdate();
+            System.out.println("Rows affected by course update: " + coursesUpdated);
+
             conn.commit();
             System.out.println("Transaction committed successfully");
             System.out.println("Connection status after commit: " + (conn != null && !conn.isClosed()));
@@ -203,6 +211,13 @@ public class InstructorDAO {
             deleteStmt.setInt(1, instructorId);
             deleteStmt.setString(2, courseCode);
             deleteStmt.executeUpdate();
+
+            // Clear instructor from courses table
+            String updateCourseSql = "UPDATE courses SET instructor_IDNumber = NULL WHERE course_Code = ? AND instructor_IDNumber = ?";
+            PreparedStatement updateStmt = conn.prepareStatement(updateCourseSql);
+            updateStmt.setString(1, courseCode);
+            updateStmt.setInt(2, instructorId);
+            updateStmt.executeUpdate();
 
             if (rowsAffected <= 0) {
                 conn.rollback();

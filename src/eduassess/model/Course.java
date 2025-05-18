@@ -6,26 +6,30 @@ public class Course {
     private StringProperty courseCode;
     private StringProperty courseName;
     private IntegerProperty pendingCount;
-    private StringProperty instructorId;
+    private IntegerProperty instructorId;
+    private StringProperty instructorName;
     private StringProperty prerequisites;
     private IntegerProperty units;
     private DoubleProperty recommendationScore;
     private StringProperty yearLevel;
     private StringProperty semester;
     private BooleanProperty failedCourse;
+    private BooleanProperty selected;
     private boolean isFailedCourse;
 
     public Course() {
         this.courseCode = new SimpleStringProperty("");
         this.courseName = new SimpleStringProperty("");
         this.pendingCount = new SimpleIntegerProperty(0);
-        this.instructorId = new SimpleStringProperty("");
+        this.instructorId = new SimpleIntegerProperty(0);
+        this.instructorName = new SimpleStringProperty("");
         this.prerequisites = new SimpleStringProperty("");
         this.units = new SimpleIntegerProperty(0);
         this.recommendationScore = new SimpleDoubleProperty(0.0);
         this.yearLevel = new SimpleStringProperty("");
         this.semester = new SimpleStringProperty("");
         this.failedCourse = new SimpleBooleanProperty(false);
+        this.selected = new SimpleBooleanProperty(false);
         this.isFailedCourse = false;
     }
 
@@ -45,10 +49,12 @@ public class Course {
         this.units = new SimpleIntegerProperty(units);
         this.recommendationScore = new SimpleDoubleProperty(recommendationScore);
         this.pendingCount = new SimpleIntegerProperty(0);
-        this.instructorId = new SimpleStringProperty("");
+        this.instructorId = new SimpleIntegerProperty(0);
+        this.instructorName = new SimpleStringProperty("");
         this.yearLevel = new SimpleStringProperty(yearLevel);
         this.semester = new SimpleStringProperty(semester);
         this.failedCourse = new SimpleBooleanProperty(false);
+        this.selected = new SimpleBooleanProperty(false);
         this.isFailedCourse = false;
     }
 
@@ -57,13 +63,15 @@ public class Course {
         this.courseCode = new SimpleStringProperty(courseCode);
         this.courseName = new SimpleStringProperty(courseName);
         this.pendingCount = new SimpleIntegerProperty(pendingCount);
-        this.instructorId = new SimpleStringProperty("");
+        this.instructorId = new SimpleIntegerProperty(0);
+        this.instructorName = new SimpleStringProperty("");
         this.prerequisites = new SimpleStringProperty("");
         this.units = new SimpleIntegerProperty(0);
         this.recommendationScore = new SimpleDoubleProperty(0.0);
         this.yearLevel = new SimpleStringProperty("");
         this.semester = new SimpleStringProperty("");
         this.failedCourse = new SimpleBooleanProperty(false);
+        this.selected = new SimpleBooleanProperty(false);
         this.isFailedCourse = false;
     }
 
@@ -80,8 +88,12 @@ public class Course {
         return pendingCount;
     }
 
-    public StringProperty instructorIdProperty() {
+    public IntegerProperty instructorIdProperty() {
         return instructorId;
+    }
+
+    public StringProperty instructorNameProperty() {
+        return instructorName;
     }
 
     public StringProperty prerequisitesProperty() {
@@ -109,8 +121,12 @@ public class Course {
         return pendingCount.get();
     }
 
-    public String getInstructorId() {
+    public int getInstructorId() {
         return instructorId.get();
+    }
+
+    public String getInstructorName() {
+        return instructorName.get();
     }
 
     public String getPrerequisites() {
@@ -154,8 +170,12 @@ public class Course {
         this.pendingCount.set(pendingCount);
     }
 
-    public void setInstructorId(String instructorId) {
+    public void setInstructorId(int instructorId) {
         this.instructorId.set(instructorId);
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName.set(instructorName);
     }
 
     public void setPrerequisites(String prerequisites) {
@@ -180,6 +200,18 @@ public class Course {
 
     public BooleanProperty failedCourseProperty() {
         return failedCourse;
+    }
+
+    public BooleanProperty selectedProperty() {
+        return selected;
+    }
+
+    public boolean isSelected() {
+        return selected.get();
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected.set(selected);
     }
 
     @Override

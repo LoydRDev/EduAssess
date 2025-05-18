@@ -20,55 +20,6 @@ import java.util.stream.Collectors;
 
 public class CourseDAO {
 
-    public void assignCourseToInstructor(String courseCode, int instructorId) throws SQLException {
-        String sql1 = "INSERT INTO instructor_courses (instructor_IDNumber, course_Code) VALUES (?, ?)";
-        String sql2 = "UPDATE courses SET instructor_IDNumber = ? WHERE course_Code = ?";
-        Connection conn = null;
-
-        try {
-            conn = DatabaseConnection.getConnection();
-            conn.setAutoCommit(false);
-
-            // Insert into instructor_courses
-            try (PreparedStatement stmt1 = conn.prepareStatement(sql1)) {
-                stmt1.setInt(1, instructorId);
-                stmt1.setString(2, courseCode);
-                stmt1.executeUpdate();
-            }
-
-            // Update courses table
-            try (PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
-                stmt2.setInt(1, instructorId);
-                stmt2.setString(2, courseCode);
-                stmt2.executeUpdate();
-            }
-
-            conn.commit();
-        } catch (SQLException e) {
-            if (conn != null) {
-                conn.rollback();
-            }
-            throw e;
-        } finally {
-            if (conn != null) {
-                conn.setAutoCommit(true);
-                conn.close();
-            }
-        }
-    }
-
-    public void unassignCourseFromInstructor(String courseCode, int instructorId) throws SQLException {
-        String sql = "DELETE FROM instructor_courses WHERE instructor_IDNumber = ? AND course_Code = ?";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, instructorId);
-            stmt.setString(2, courseCode);
-            stmt.executeUpdate();
-        }
-    }
-
     public boolean enrollStudentInCourse(String studentId, String courseCode, String yearLevel, String semester) {
         System.out.println("\n=== Starting single course enrollment process ===");
         System.out.println("Student ID: " + studentId);
