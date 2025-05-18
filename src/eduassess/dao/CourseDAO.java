@@ -19,6 +19,55 @@ import java.util.stream.Collectors;
 
 public class CourseDAO {
 
+    public List<Course> getCoursesForInstructor(int instructorId) throws SQLException {
+        List<Course> courses = new ArrayList<>();
+        String sql = "SELECT c.* FROM courses c " +
+                "JOIN instructor_courses ic ON c.course_code = ic.course_Code " +
+                "WHERE ic.instructor_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, instructorId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Course course = new Course();
+                course.setCourseCode(rs.getString("course_Code"));
+                course.setCourseName(rs.getString("course_Name"));
+                course.setUnits(rs.getInt("course_Units"));
+                course.setYearLevel(rs.getString("course_YearLevel"));
+                course.setSemester(rs.getString("course_Semester"));
+                courses.add(course);
+            }
+        }
+        return courses;
+    }
+
+    public void assignCourseToInstructor(String courseCode, int instructorId) throws SQLException {
+        String sql = "INSERT INTO instructor_courses (instructor_id, course_code) VALUES (?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, instructorId);
+            stmt.setString(2, courseCode);
+            stmt.executeUpdate();
+        }
+    }
+
+    public void unassignCourseFromInstructor(String courseCode, int instructorId) throws SQLException {
+        String sql = "DELETE FROM instructor_courses WHERE instructor_id = ? AND course_code = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, instructorId);
+            stmt.setString(2, courseCode);
+            stmt.executeUpdate();
+        }
+    }
+
     public boolean enrollStudentInCourse(String studentId, String courseCode, String yearLevel, String semester) {
         System.out.println("\n=== Starting single course enrollment process ===");
         System.out.println("Student ID: " + studentId);

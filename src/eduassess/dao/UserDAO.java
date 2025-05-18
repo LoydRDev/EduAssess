@@ -31,10 +31,11 @@ public class UserDAO {
 
             // Then, insert into the appropriate role-specific table
             if ("STUDENT".equals(user.getUserType())) {
-                String studentSql = "INSERT INTO student (student_IDNumber, student_Name, student_Type) VALUES (?, ?, 'REGULAR')";
+                String studentSql = "INSERT INTO student (student_IDNumber, student_Name, student_Email, student_Type) VALUES (?, ?, ?, 'REGULAR')";
                 PreparedStatement studentStmt = conn.prepareStatement(studentSql);
                 studentStmt.setString(1, user.getIdNumber());
                 studentStmt.setString(2, user.getFullName());
+                studentStmt.setString(3, user.getEmail());
                 studentStmt.executeUpdate();
             } else if ("INSTRUCTOR".equals(user.getUserType())) {
                 String instructorSql = "INSERT INTO instructor (instructor_IDNumber, instructor_Name, department) VALUES (?, ?, 'UNASSIGNED')";
@@ -195,6 +196,28 @@ public class UserDAO {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public List<User> getAllInstructors() throws SQLException {
+        List<User> instructors = new ArrayList<>();
+        String sql = "SELECT u.* FROM users u JOIN instructor i ON u.id_number = i.instructor_IDNumber WHERE u.user_type = 'INSTRUCTOR' AND u.status = 'Active'";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                User instructor = new User(
+                        rs.getString("id_number"),
+                        rs.getString("full_name"),
+                        rs.getString("email"),
+                        rs.getString("user_type"));
+                instructor.setId(rs.getInt("id"));
+                instructor.setStatus(rs.getString("status"));
+                instructors.add(instructor);
+            }
+        }
+        return instructors;
     }
 
     public int getTotalInstructors() {
@@ -376,5 +399,6 @@ public class UserDAO {
         }
 
         return users;
-        }
     }
+
+}

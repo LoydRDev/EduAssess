@@ -230,4 +230,42 @@ public class InstructorCourseDAO {
         }
         return instructors;
     }
+
+    public List<Map<String, String>> getAllInstructors() {
+        List<Map<String, String>> instructors = new ArrayList<>();
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            String sql = "SELECT u.id_number, u.full_name, u.email " +
+                    "FROM users u " +
+                    "JOIN instructor i ON u.id_number = i.instructor_IDNumber " +
+                    "WHERE i.status = 'Active'";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Map<String, String> instructor = new HashMap<>();
+                instructor.put("instructorId", rs.getString("id_number"));
+                instructor.put("instructorName", rs.getString("full_name"));
+                instructor.put("email", rs.getString("email"));
+                instructors.add(instructor);
+            }
+        } catch (SQLException e) {
+            String errorMessage = String.format(
+                    "Error retrieving all instructors: %s (SQL State: %s, Error Code: %d)",
+                    e.getMessage(), e.getSQLState(), e.getErrorCode());
+            System.err.println("\n" + errorMessage);
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return instructors;
+    }
 }

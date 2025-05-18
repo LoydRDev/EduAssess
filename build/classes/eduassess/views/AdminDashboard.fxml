@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="eduassess.controller.AdminDashboardController"
-      stylesheets="@../styles/AdminDashboard.css"
-      prefWidth="1200">
+<HBox prefWidth="1200" stylesheets="@../styles/AdminDashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eduassess.controller.AdminDashboardController">
     
     <!-- Sidebar -->
     <VBox styleClass="sidebar">
-        <Label text="EduAssess" styleClass="logo"/>
+        <Label styleClass="logo" text="EduAssess" />
         
         <VBox styleClass="nav-items" VBox.vgrow="ALWAYS">
-            <Button text="Dashboard" styleClass="nav-button, active"/>
+            <Button styleClass="nav-button, active" text="Dashboard" />
+         <Button styleClass="nav-button, active" text="Instructor Management" />
             <VBox.margin>
                 <Insets top="20" />
             </VBox.margin>
         </VBox>
         
         <VBox styleClass="sidebar-footer" VBox.vgrow="NEVER">
-            <Button text="Logout" styleClass="nav-button, logout-button" onAction="#handleLogout"/>
+            <Button onAction="#handleLogout" styleClass="nav-button, logout-button" text="Logout" />
         </VBox>
     </VBox>
     
     <!-- Main Content -->
-    <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
+    <VBox styleClass="main-content" HBox.hgrow="ALWAYS">
         <!-- Header -->
-        <HBox styleClass="header" fx:id="header">
+        <HBox fx:id="header" styleClass="header">
             <HBox styleClass="user-info">
-                <Label text="Welcome," styleClass="welcome-text"/>
-                <Label fx:id="userNameLabel" text="Administrator" styleClass="user-name"/>
+                <Label styleClass="welcome-text" text="Welcome," />
+                <Label fx:id="userNameLabel" styleClass="user-name" text="Administrator" />
             </HBox>
             
-            <HBox styleClass="header-actions" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-                <Button text="Add Instructor" styleClass="action-button" onAction="#handleAddInstructor"/>
+            <HBox alignment="CENTER_RIGHT" styleClass="header-actions" HBox.hgrow="ALWAYS">
+                <Button onAction="#handleAddInstructor" styleClass="action-button" text="Add Instructor" />
+                <Button onAction="#handleInstructorManagement" styleClass="action-button" text="Instructor Management" />
             </HBox>
         </HBox>
         
@@ -46,44 +50,44 @@
                 <!-- Quick Stats -->
                 <HBox spacing="20" styleClass="stats-container">
                     <VBox styleClass="stat-card">
-                        <Label text="Total Users" styleClass="stat-label"/>
-                        <Label fx:id="totalUsersLabel" text="0" styleClass="stat-value"/>
+                        <Label styleClass="stat-label" text="Total Users" />
+                        <Label fx:id="totalUsersLabel" styleClass="stat-value" text="0" />
                     </VBox>
                     
                     <VBox styleClass="stat-card">
-                        <Label text="Total Students" styleClass="stat-label"/>
-                        <Label fx:id="totalStudentsLabel" text="0" styleClass="stat-value"/>
+                        <Label styleClass="stat-label" text="Total Students" />
+                        <Label fx:id="totalStudentsLabel" styleClass="stat-value" text="0" />
                     </VBox>
                     
                     <VBox styleClass="stat-card">
-                        <Label text="Total Instructors" styleClass="stat-label"/>
-                        <Label fx:id="totalInstructorsLabel" text="0" styleClass="stat-value"/>
+                        <Label styleClass="stat-label" text="Total Instructors" />
+                        <Label fx:id="totalInstructorsLabel" styleClass="stat-value" text="0" />
                     </VBox>
                     
                     <VBox styleClass="stat-card">
-                        <Label text="Total Assessments" styleClass="stat-label"/>
-                        <Label fx:id="totalAssessmentsLabel" text="0" styleClass="stat-value"/>
+                        <Label styleClass="stat-label" text="Total Assessments" />
+                        <Label fx:id="totalAssessmentsLabel" styleClass="stat-value" text="0" />
                     </VBox>
                 </HBox>
                 
                 <!-- Recent Users -->
                 <VBox styleClass="section">
                     <HBox alignment="CENTER_LEFT" spacing="10" styleClass="section-header">
-                        <Label text="Recent Users" styleClass="section-title"/>
+                        <Label styleClass="section-title" text="Recent Users" />
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button text="View All" styleClass="link-button"/>
+                        <Button styleClass="link-button" text="View All" />
                     </HBox>
                     <TableView fx:id="recentUsersTable" styleClass="courses-table" VBox.vgrow="ALWAYS">
                         <columns>
-                            <TableColumn text="ID Number" fx:id="idNumberColumn" prefWidth="100" styleClass="table-column"/>
-                            <TableColumn text="Full Name" fx:id="fullNameColumn" prefWidth="180" styleClass="table-column"/>
-                            <TableColumn text="User Type" fx:id="userTypeColumn" prefWidth="100" styleClass="table-column"/>
-                            <TableColumn text="Email" fx:id="emailColumn" prefWidth="220" styleClass="table-column"/>
-                            <TableColumn text="Status" fx:id="statusColumn" prefWidth="80" styleClass="table-column"/>
-                            <TableColumn text="Actions" fx:id="actionsColumn" prefWidth="120" styleClass="table-column"/>
+                            <TableColumn fx:id="idNumberColumn" prefWidth="100" styleClass="table-column" text="ID Number" />
+                            <TableColumn fx:id="fullNameColumn" prefWidth="180" styleClass="table-column" text="Full Name" />
+                            <TableColumn fx:id="userTypeColumn" prefWidth="100" styleClass="table-column" text="User Type" />
+                            <TableColumn fx:id="emailColumn" prefWidth="220" styleClass="table-column" text="Email" />
+                            <TableColumn fx:id="statusColumn" prefWidth="80" styleClass="table-column" text="Status" />
+                            <TableColumn fx:id="actionsColumn" prefWidth="120" styleClass="table-column" text="Actions" />
                         </columns>
                         <VBox.margin>
-                            <Insets top="10"/>
+                            <Insets top="10" />
                         </VBox.margin>
                     </TableView>
                 </VBox>

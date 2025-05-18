@@ -168,6 +168,21 @@ public class AdminDashboardController implements Initializable {
     }
 
     @FXML
+    private void handleInstructorManagement() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/AdminInstructorAssignment.fxml"));
+            Parent instructorAssignmentView = loader.load();
+            Stage stage = (Stage) userNameLabel.getScene().getWindow();
+            Scene scene = new Scene(instructorAssignmentView);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load Instructor Management. Please try again.");
+        }
+    }
+
+    @FXML
     private void handleAddInstructor() {
         Dialog<User> dialog = new Dialog<>();
         dialog.setTitle("Add Instructor");

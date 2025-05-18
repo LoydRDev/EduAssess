@@ -15,6 +15,20 @@ public class Course {
     private BooleanProperty failedCourse;
     private boolean isFailedCourse;
 
+    public Course() {
+        this.courseCode = new SimpleStringProperty("");
+        this.courseName = new SimpleStringProperty("");
+        this.pendingCount = new SimpleIntegerProperty(0);
+        this.instructorId = new SimpleStringProperty("");
+        this.prerequisites = new SimpleStringProperty("");
+        this.units = new SimpleIntegerProperty(0);
+        this.recommendationScore = new SimpleDoubleProperty(0.0);
+        this.yearLevel = new SimpleStringProperty("");
+        this.semester = new SimpleStringProperty("");
+        this.failedCourse = new SimpleBooleanProperty(false);
+        this.isFailedCourse = false;
+    }
+
     public boolean isFailedCourse() {
         return isFailedCourse;
     }
@@ -154,6 +168,14 @@ public class Course {
 
     public void setRecommendationScore(double recommendationScore) {
         this.recommendationScore.set(recommendationScore);
+    }
+
+    public void setYearLevel(String yearLevel) {
+        this.yearLevel.set(yearLevel);
+    }
+
+    public void setSemester(String semester) {
+        this.semester.set(semester);
     }
 
     public BooleanProperty failedCourseProperty() {
