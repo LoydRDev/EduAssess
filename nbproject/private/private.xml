@@ -3,11 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/controller/InstructorManagementController.java</file>
+            <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/controller/RoomUtilizationController.java</file>
+            <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/views/BookRoom.fxml</file>
+            <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/views/RoomUtilization.fxml</file>
+            <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/dao/RoomUtilizationDAO.java</file>
+            <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/model/RoomUtilization.java</file>
             <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/dao/InstructorDAO.java</file>
+            <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/controller/InstructorManagementController.java</file>
             <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/model/Instructor.java</file>
-            <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/dao/CourseDAO.java</file>
-            <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/model/Course.java</file>
+            <file>file:/C:/Users/black/OneDrive/Documents/NetBeansProjects/EduAssess/src/eduassess/controller/AdminDashboardController.java</file>
         </group>
     </open-files>
 </project-private>

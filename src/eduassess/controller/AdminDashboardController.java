@@ -1,8 +1,12 @@
 package eduassess.controller;
 
+import eduassess.dao.RoomUtilizationDAO;
 import eduassess.dao.UserDAO;
 import eduassess.model.User;
+import eduassess.model.RoomUtilization;
 import eduassess.util.SessionManager;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,6 +51,7 @@ public class AdminDashboardController implements Initializable {
     private double xOffset = 0;
     private double yOffset = 0;
     private UserDAO userDAO;
+    private RoomUtilizationDAO roomUtilizationDAO;
 
     @FXML
     private HBox header;
@@ -61,9 +66,15 @@ public class AdminDashboardController implements Initializable {
     private Label totalInstructorsLabel;
     @FXML
     private Label totalAssessmentsLabel;
+    @FXML
+    private Label totalRoomsLabel;
+    @FXML
+    private Label avgUtilizationLabel;
 
     @FXML
     private TableView<User> recentUsersTable;
+    @FXML
+    private TableView<RoomUtilization> roomUtilizationTable;
     @FXML
     private TableColumn<User, String> idNumberColumn;
     @FXML
@@ -81,6 +92,7 @@ public class AdminDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userDAO = new UserDAO();
+        roomUtilizationDAO = new RoomUtilizationDAO();
         setupDraggable();
         setupTables();
 
@@ -180,6 +192,21 @@ public class AdminDashboardController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Error", "Failed to load Instructor Management. Please try again.");
+        }
+    }
+
+    @FXML
+    private void handleRoomUtilization() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/eduassess/views/RoomUtilization.fxml"));
+            Parent roomUtilization = loader.load();
+            Stage stage = (Stage) userNameLabel.getScene().getWindow();
+            Scene scene = new Scene(roomUtilization);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load Room Utilization, Please try again.");
         }
     }
 

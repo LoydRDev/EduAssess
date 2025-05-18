@@ -1,0 +1,32 @@
+.room-utilization-table {
+  -fx-background-color: #ffffff;
+  -fx-padding: 10px;
+}
+
+.room-utilization-table .column-header {
+  -fx-background-color: #3b82f6;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+}
+
+.room-utilization-table .table-row-cell {
+  -fx-background-color: #f8fafc;
+}
+
+.room-utilization-table .table-row-cell:odd {
+  -fx-background-color: #e2e8f0;
+}
+
+.room-utilization-table .table-row-cell:selected {
+  -fx-background-color: #93c5fd;
+}
+
+.utilization-label {
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+}
+
+.utilization-value {
+  -fx-font-size: 18px;
+  -fx-text-fill: #3b82f6;
+}

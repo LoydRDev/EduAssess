@@ -36,6 +36,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.scene.control.TableCell;
@@ -176,6 +178,30 @@ public class StudentDashboardController implements Initializable {
     @FXML
     private void handleEnrollment() {
         try {
+            // Get current student's year and semester
+            String yearSemester = courseDAO.getStudentYearAndSemester(currentUser.getIdNumber());
+            if (yearSemester == null) {
+                showErrorAlert("Error", "Could not determine student's year and semester");
+                return;
+            }
+
+            // Check unit restrictions
+            Map<String, Integer> restrictions = getUnitRestrictions();
+            int maxUnits = restrictions.getOrDefault(yearSemester, 0);
+
+            if (maxUnits == 0) {
+                showErrorAlert("Error", "No unit restrictions defined for your year and semester");
+                return;
+            }
+
+            // Get current enrolled units
+            int currentUnits = courseDAO.getStudentTotalUnits(currentUser.getIdNumber());
+            if (currentUnits >= maxUnits) {
+                showErrorAlert("Enrollment Error",
+                        "You have reached the maximum allowed units (" + maxUnits + ") for " + yearSemester);
+                return;
+            }
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/eduassess/views/NotEnrolledCourses.fxml"));
             Parent enrollmentView = loader.load();
             NotEnrolledCoursesController controller = loader.getController();
@@ -227,6 +253,19 @@ public class StudentDashboardController implements Initializable {
         studentIdLabel.setText("ID: " + user.getIdNumber());
         studentIdLabel.setStyle("-fx-font-weight: bold");
         loadDashboardData();
+    }
+
+    private Map<String, Integer> getUnitRestrictions() {
+        Map<String, Integer> restrictions = new HashMap<>();
+        restrictions.put("FirstYear-FirstSemester", 23);
+        restrictions.put("FirstYear-SecondSemester", 23);
+        restrictions.put("SecondYear-FirstSemester", 23);
+        restrictions.put("SecondYear-SecondSemester", 23);
+        restrictions.put("ThirdYear-FirstSemester", 24);
+        restrictions.put("ThirdYear-SecondSemester", 24);
+        restrictions.put("FourthYear-FirstSemester", 12);
+        restrictions.put("FourthYear-SecondSemester", 9);
+        return restrictions;
     }
 
     private void loadDashboardData() {

@@ -50,11 +50,31 @@ public class GradeDAO {
     }
 
     public boolean saveGrade(String studentId, String courseCode, double grade) {
+        // First check if course is in first semester
+        String semesterCheckSql = "SELECT course_Semester FROM courses WHERE course_Code = ?";
+        String semester = "";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(semesterCheckSql)) {
+
+            pstmt.setString(1, courseCode);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                semester = rs.getString("course_Semester");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        String column = "1".equals(semester) ? "midterm_grade" : "2".equals(semester) ? "final_grade" : "grade";
+
         String sql = """
-                INSERT INTO grades (student_IDNumber, course_Code, grade, date_updated, status)
+                INSERT INTO grades (student_IDNumber, course_Code, "" + column + "", date_updated, status)
                 VALUES (?, ?, ?, NOW(), 'PENDING')
                 ON DUPLICATE KEY UPDATE
-                grade = VALUES(grade),
+                "" + column + "" = VALUES("" + column + ""),
                 date_updated = NOW(),
                 status = 'PENDING'
                 """;

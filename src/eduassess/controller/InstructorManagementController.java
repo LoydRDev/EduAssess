@@ -453,6 +453,21 @@ public class InstructorManagementController implements Initializable {
             showAlert("Error", "Failed to load Instructor Management. Please try again.");
         }
     }
+    
+    @FXML
+    private void handleRoomUtilization(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/eduasses/views/RoomUtilization.fxml"));
+            Parent roomUtilization = loader.load();
+            Stage stage = (Stage) userNameLabel.getScene().getWindow();
+            Scene scene = new Scene(roomUtilization);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+        } catch (IOException e){
+            e.printStackTrace();
+            showAlert("Error", "Failed to load Room Utilization, Please try again.");
+        }
+    }
 
     @FXML
     private void handleLogout() {

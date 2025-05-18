@@ -20,6 +20,49 @@ import java.util.stream.Collectors;
 
 public class CourseDAO {
 
+    public String getStudentYearAndSemester(String studentId) {
+        String query = "SELECT year_level, semester FROM enrollments WHERE student_IDNumber = ? LIMIT 1";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, studentId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String yearLevel = rs.getString("year_level");
+                String semester = rs.getString("semester");
+                return yearLevel + " " + semester;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public int getStudentTotalUnits(String studentId) {
+        String query = "SELECT SUM(c.lec + c.lab) as total_units " +
+                "FROM enrollments e " +
+                "JOIN courses c ON e.course_Code = c.course_Code " +
+                "WHERE e.student_IDNumber = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, studentId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("total_units");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
     public boolean enrollStudentInCourse(String studentId, String courseCode, String yearLevel, String semester) {
         System.out.println("\n=== Starting single course enrollment process ===");
         System.out.println("Student ID: " + studentId);
