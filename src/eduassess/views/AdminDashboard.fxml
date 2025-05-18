@@ -15,10 +15,10 @@
     <!-- Sidebar -->
     <VBox styleClass="sidebar">
         <Label styleClass="logo" text="EduAssess" />
-        
+       
         <VBox styleClass="nav-items" VBox.vgrow="ALWAYS">
             <Button styleClass="nav-button, active" text="Dashboard" />
-         <Button styleClass="nav-button, active" text="Instructor Management" />
+            <Button onAction="#handleInstructorManagement" styleClass="nav-button" text="Instructor Management" />
             <VBox.margin>
                 <Insets top="20" />
             </VBox.margin>
@@ -40,7 +40,6 @@
             
             <HBox alignment="CENTER_RIGHT" styleClass="header-actions" HBox.hgrow="ALWAYS">
                 <Button onAction="#handleAddInstructor" styleClass="action-button" text="Add Instructor" />
-                <Button onAction="#handleInstructorManagement" styleClass="action-button" text="Instructor Management" />
             </HBox>
         </HBox>
         
@@ -77,14 +76,14 @@
                         <Region HBox.hgrow="ALWAYS" />
                         <Button styleClass="link-button" text="View All" />
                     </HBox>
-                    <TableView fx:id="recentUsersTable" styleClass="courses-table" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="recentUsersTable" prefHeight="400.0" prefWidth="860.0" styleClass="courses-table" VBox.vgrow="ALWAYS">
                         <columns>
-                            <TableColumn fx:id="idNumberColumn" prefWidth="100" styleClass="table-column" text="ID Number" />
-                            <TableColumn fx:id="fullNameColumn" prefWidth="180" styleClass="table-column" text="Full Name" />
-                            <TableColumn fx:id="userTypeColumn" prefWidth="100" styleClass="table-column" text="User Type" />
-                            <TableColumn fx:id="emailColumn" prefWidth="220" styleClass="table-column" text="Email" />
-                            <TableColumn fx:id="statusColumn" prefWidth="80" styleClass="table-column" text="Status" />
-                            <TableColumn fx:id="actionsColumn" prefWidth="120" styleClass="table-column" text="Actions" />
+                            <TableColumn fx:id="idNumberColumn" prefWidth="100.0" resizable="false" styleClass="table-column" text="ID Number" />
+                            <TableColumn fx:id="fullNameColumn" prefWidth="174.0" resizable="false" styleClass="table-column" text="Full Name" />
+                            <TableColumn fx:id="userTypeColumn" prefWidth="100" resizable="false" styleClass="table-column" text="User Type" />
+                            <TableColumn fx:id="emailColumn" prefWidth="220" resizable="false" styleClass="table-column" text="Email" />
+                            <TableColumn fx:id="statusColumn" prefWidth="100.0" resizable="false" styleClass="table-column" text="Status" />
+                            <TableColumn fx:id="actionsColumn" prefWidth="153.0" resizable="false" styleClass="table-column" text="Actions" />
                         </columns>
                         <VBox.margin>
                             <Insets top="10" />

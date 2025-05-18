@@ -165,8 +165,8 @@ public class LoginController implements Initializable {
 
         welcomeAlert.show();
 
-        // Navigate to dashboard after 3 seconds
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
+        // Navigate to dashboard after 2 seconds
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> {
             welcomeAlert.close();
             try {
                 // Determine which dashboard to load based on user type

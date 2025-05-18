@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox prefHeight="787.0" prefWidth="1200" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eduassess.controller.InstructorManagementController">
+   <children>
+      <HBox prefWidth="1200" stylesheets="@../styles/AdminDashboard.css">
+         <children>
+            <VBox styleClass="sidebar">
+               <children>
+                  <Label styleClass="logo" text="EduAssess" />
+                  <VBox styleClass="nav-items" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets top="20" />
+                     </VBox.margin>
+                     <children>
+                        <Button onAction="#backToDashboard" styleClass="nav-button" text="Dashboard">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                        <Button onAction="#handleInstructorManagement" styleClass="nav-button, active" text="Instructor Management">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                     </children>
+                  </VBox>
+                  <VBox styleClass="sidebar-footer" VBox.vgrow="NEVER">
+                     <children>
+                        <Button onAction="#handleLogout" styleClass="nav-button, logout-button" text="Logout" />
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="787.0" prefWidth="685.0" styleClass="main-content" stylesheets="@../styles/admin-instructor-assignment.css" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox prefHeight="48.0" prefWidth="890.0">
+                     <children>
+                          <Label styleClass="title" text="Instructor Course Assignment" />
+                                   <Region HBox.hgrow="ALWAYS" />
+                                   <Label fx:id="userNameLabel" styleClass="user-name" />
+                     </children></HBox>
+                  <ScrollPane>
+                     <content>
+                        <VBox fx:id="formContainer" prefHeight="632.0" prefWidth="882.0" stylesheets="@../styles/admin-instructor-assignment.css">
+                           <children>
+                                                    <!-- Header Section -->
+                               <HBox alignment="CENTER_LEFT" spacing="20">
+                                   <Region prefHeight="52.0" prefWidth="803.0" HBox.hgrow="ALWAYS" />
+                                   <Button fx:id="refreshButton" onAction="#refreshData" styleClass="refresh-button" text="Refresh" />
+                               </HBox>
+                               
+                                              <!-- Assignment Form -->
+                               <GridPane hgap="20" vgap="10">
+                                   <columnConstraints>
+                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="100" prefWidth="200" />
+                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="200" prefWidth="300" />
+                                   </columnConstraints>
+                                   
+                                                  <Label text="Select Instructor:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                   <ComboBox fx:id="instructorComboBox" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                   
+                                                  <Label text="Select Course:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                   <ComboBox fx:id="courseComboBox" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                   
+                                                  <Button fx:id="assignButton" onAction="#handleAssignCourse" text="Assign Course" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                 <rowConstraints>
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                 </rowConstraints>
+                               </GridPane>
+                               
+                                              <!-- Search Section -->
+                               <HBox alignment="CENTER_LEFT" spacing="10">
+                                   <Label text="Search:" />
+                                   <TextField fx:id="searchField" prefHeight="32.0" prefWidth="800.0" promptText="Search by instructor or course..." HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                       <Insets bottom="10.0" top="10.0" />
+                                    </HBox.margin>
+                                    <opaqueInsets>
+                                       <Insets right="12.0" />
+                                    </opaqueInsets></TextField>
+                               </HBox>
+                               
+                                              <!-- Assigned Courses Table -->
+                               <TableView fx:id="instructorsTable" prefHeight="315.0" prefWidth="882.0" VBox.vgrow="ALWAYS">
+                                   <columns>
+                                       <TableColumn fx:id="courseCodeColumn" prefWidth="150.0" resizable="false" text="Course Code" />
+                                       <TableColumn fx:id="courseNameColumn" prefWidth="400.0" resizable="false" text="Course Name" />
+                                       <TableColumn fx:id="courseInstructorColumn" prefWidth="170.0" resizable="false" text="Instructor" />
+                                   </columns>
+                                   <placeholder>
+                                       <Label text="No assigned courses found" />
+                                   </placeholder>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                               </TableView>
+                               
+                                                          <!-- Status Bar -->
+                               <HBox alignment="CENTER_LEFT" spacing="10" styleClass="status-bar">
+                                   <Label fx:id="statusLabel" text="Ready" />
+                                   <Region HBox.hgrow="ALWAYS" />
+                                   <Label fx:id="totalAssignmentsLabel" text="Total Assignments: 0" />
+                               </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</HBox>

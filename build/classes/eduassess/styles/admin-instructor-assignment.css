@@ -2,17 +2,18 @@
     -fx-background-color: #f5f5f5;
 }
 
-.admin-instructor-assignment .label {
+.label {
     -fx-text-fill: #2c3e50;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
 }
-
-.admin-instructor-assignment .title {
+.title {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-padding: 0 0 20 0;
 }
 
-.admin-instructor-assignment .combo-box {
+.combo-box {
     -fx-background-color: white;
     -fx-border-color: #dcdcdc;
     -fx-border-radius: 4;
@@ -20,11 +21,11 @@
     -fx-min-height: 35px;
 }
 
-.admin-instructor-assignment .combo-box:hover {
+.combo-box:hover {
     -fx-border-color: #2196F3;
 }
 
-.admin-instructor-assignment .button {
+.button {
     -fx-background-color: #2196F3;
     -fx-text-fill: white;
     -fx-font-weight: bold;
@@ -33,31 +34,31 @@
     -fx-cursor: hand;
 }
 
-.admin-instructor-assignment .button:hover {
+.button:hover {
     -fx-background-color: #1976D2;
 }
 
-.admin-instructor-assignment .table-view {
+.table-view {
     -fx-background-color: white;
     -fx-border-color: #dcdcdc;
     -fx-border-radius: 4;
 }
 
-.admin-instructor-assignment .table-view .column-header {
+.column-header {
     -fx-background-color: #f8f9fa;
     -fx-border-color: transparent #dcdcdc transparent transparent;
 }
 
-.admin-instructor-assignment .table-view .table-row-cell {
+.table-row-cell {
     -fx-border-color: transparent;
     -fx-table-cell-border-color: transparent;
 }
 
-.admin-instructor-assignment .table-view .table-row-cell:odd {
+.table-view .table-row-cell:odd {
     -fx-background-color: #f8f9fa;
 }
 
-.admin-instructor-assignment .table-view .table-row-cell:selected {
+.table-view .table-row-cell:selected {
     -fx-background-color: #e3f2fd;
     -fx-text-fill: #2c3e50;
 }

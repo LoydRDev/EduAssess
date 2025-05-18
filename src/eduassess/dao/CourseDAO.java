@@ -2,6 +2,7 @@ package eduassess.dao;
 
 import eduassess.model.Course;
 import eduassess.model.CourseEnrollment;
+import eduassess.model.Instructor;
 import eduassess.model.User;
 import eduassess.util.DatabaseConnection;
 import java.sql.Connection;
@@ -19,45 +20,45 @@ import java.util.stream.Collectors;
 
 public class CourseDAO {
 
-    public List<Course> getCoursesForInstructor(int instructorId) throws SQLException {
-        List<Course> courses = new ArrayList<>();
-        String sql = "SELECT c.* FROM courses c " +
-                "JOIN instructor_courses ic ON c.course_code = ic.course_Code " +
-                "WHERE ic.instructor_id = ?";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, instructorId);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Course course = new Course();
-                course.setCourseCode(rs.getString("course_Code"));
-                course.setCourseName(rs.getString("course_Name"));
-                course.setUnits(rs.getInt("course_Units"));
-                course.setYearLevel(rs.getString("course_YearLevel"));
-                course.setSemester(rs.getString("course_Semester"));
-                courses.add(course);
-            }
-        }
-        return courses;
-    }
-
     public void assignCourseToInstructor(String courseCode, int instructorId) throws SQLException {
-        String sql = "INSERT INTO instructor_courses (instructor_id, course_code) VALUES (?, ?)";
+        String sql1 = "INSERT INTO instructor_courses (instructor_IDNumber, course_Code) VALUES (?, ?)";
+        String sql2 = "UPDATE courses SET instructor_IDNumber = ? WHERE course_Code = ?";
+        Connection conn = null;
 
-        try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try {
+            conn = DatabaseConnection.getConnection();
+            conn.setAutoCommit(false);
 
-            stmt.setInt(1, instructorId);
-            stmt.setString(2, courseCode);
-            stmt.executeUpdate();
+            // Insert into instructor_courses
+            try (PreparedStatement stmt1 = conn.prepareStatement(sql1)) {
+                stmt1.setInt(1, instructorId);
+                stmt1.setString(2, courseCode);
+                stmt1.executeUpdate();
+            }
+
+            // Update courses table
+            try (PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
+                stmt2.setInt(1, instructorId);
+                stmt2.setString(2, courseCode);
+                stmt2.executeUpdate();
+            }
+
+            conn.commit();
+        } catch (SQLException e) {
+            if (conn != null) {
+                conn.rollback();
+            }
+            throw e;
+        } finally {
+            if (conn != null) {
+                conn.setAutoCommit(true);
+                conn.close();
+            }
         }
     }
 
     public void unassignCourseFromInstructor(String courseCode, int instructorId) throws SQLException {
-        String sql = "DELETE FROM instructor_courses WHERE instructor_id = ? AND course_code = ?";
+        String sql = "DELETE FROM instructor_courses WHERE instructor_IDNumber = ? AND course_Code = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {

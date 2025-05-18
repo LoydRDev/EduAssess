@@ -3,6 +3,7 @@ package eduassess.controller;
 import eduassess.dao.UserDAO;
 import eduassess.model.User;
 import eduassess.util.SessionManager;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -170,10 +171,10 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private void handleInstructorManagement() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/AdminInstructorAssignment.fxml"));
-            Parent instructorAssignmentView = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/eduassess/views/InstructorManagement.fxml"));
+            Parent instructorManagementView = loader.load();
             Stage stage = (Stage) userNameLabel.getScene().getWindow();
-            Scene scene = new Scene(instructorAssignmentView);
+            Scene scene = new Scene(instructorManagementView);
             stage.setScene(scene);
             stage.centerOnScreen();
         } catch (IOException e) {
